@@ -1384,11 +1384,19 @@ addButton.addEventListener("click", function () {
             }
 
 
-            alert(
-                "Checkout system next step me banayenge! 🛍️"
-            );
+            function goToCheckout() {
 
-        }
+    if (cart.length === 0) {
+
+        alert("Cart empty hai.");
+
+        return;
+
+    }
+
+    window.location.href = "checkout.html";
+
+}
 
 
         // ==========================================
