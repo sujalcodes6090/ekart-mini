@@ -690,28 +690,34 @@
                         "product-info";
 
 
-                    infoDiv.innerHTML = `
+                   infoDiv.innerHTML = `
 
-                        <p class="product-category">
-                            ${productCategory}
-                        </p>
+    <p class="product-category">
+        ${productCategory}
+    </p>
 
-                        <h3>
-                            ${productName}
-                        </h3>
+    <h3>
+        ${productName}
+    </h3>
 
-                        <div class="price">
-                            ₹${productPrice.toLocaleString("en-IN")}
-                        </div>
+    <div class="price">
+        ₹${productPrice.toLocaleString("en-IN")}
+    </div>
 
-                        <button
-                            onclick="addToCart(${product.id})">
+    <button class="add-cart-btn">
+        Add to Cart
+    </button>
 
-                            Add to Cart
+`;
 
-                        </button>
+const addButton =
+    infoDiv.querySelector(".add-cart-btn");
 
-                    `;
+addButton.addEventListener("click", function () {
+
+    addToCart(product.id);
+
+});
 
 
                     card.appendChild(
