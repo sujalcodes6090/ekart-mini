@@ -846,274 +846,369 @@ addButton.addEventListener("click", function () {
         // UPDATE CART
         // ==========================================
 
-        function updateCartUI() {
+       function updateCartUI() {
 
-            const cartItems =
-                document.getElementById(
-                    "cartItems"
-                );
+    const cartItems =
+        document.getElementById("cartItems");
 
-            const cartCount =
-                document.getElementById(
-                    "cartCount"
-                );
+    const cartCount =
+        document.getElementById("cartCount");
 
-            const cartTotal =
-                document.getElementById(
-                    "cartTotal"
-                );
+    const cartTotal =
+        document.getElementById("cartTotal");
 
-            const cartFooter =
-                document.getElementById(
-                    "cartFooter"
-                );
+    const cartFooter =
+        document.getElementById("cartFooter");
 
 
-            // Total quantity
-            const totalQuantity =
-                cart.reduce(
-                    function(total, item) {
+    // ==============================
+    // TOTAL QUANTITY
+    // ==============================
 
-                        return (
-                            total +
-                            item.quantity
-                        );
+    const totalQuantity =
+        cart.reduce(function(total, item) {
 
-                    },
-                    0
-                );
+            return total + item.quantity;
+
+        }, 0);
 
 
-            cartCount.textContent =
-                totalQuantity;
+    cartCount.textContent =
+        totalQuantity;
 
 
-            // Empty cart
-            if (
-                cart.length === 0
-            ) {
+    // ==============================
+    // EMPTY CART
+    // ==============================
 
-                cartItems.innerHTML = `
+    if (cart.length === 0) {
 
-                    <div class="empty-cart">
+        cartItems.innerHTML = `
 
-                        <div style="font-size:50px;">
-                            🛒
-                        </div>
+            <div class="empty-cart">
 
-                        <h3>
-                            Your cart is empty
-                        </h3>
+                <div style="font-size:50px;">
+                    🛒
+                </div>
 
-                        <p>
-                            Add some products to your cart.
-                        </p>
+                <h3>
+                    Your cart is empty
+                </h3>
 
-                    </div>
+                <p>
+                    Add some products to your cart.
+                </p>
 
-                `;
+            </div>
 
-                cartFooter.style.display =
-                    "none";
+        `;
 
-                return;
+        cartFooter.style.display =
+            "none";
 
-            }
-
-
-            cartFooter.style.display =
-                "block";
+        return;
+    }
 
 
-            cartItems.innerHTML =
-                "";
+    cartFooter.style.display =
+        "block";
 
 
-            let total =
-                0;
+    cartItems.innerHTML =
+        "";
 
 
-            cart.forEach(
-                function(item) {
-
-                    total +=
-                        item.price *
-                        item.quantity;
+    let total = 0;
 
 
-                    const itemDiv =
-                        document.createElement(
-                            "div"
-                        );
+    // ==============================
+    // CREATE CART ITEMS
+    // ==============================
 
-                    itemDiv.className =
-                        "cart-item";
+    cart.forEach(function(item) {
 
-
-                    let imageHTML =
-                        "🛍️";
+        total +=
+            item.price * item.quantity;
 
 
-                    if (item.image) {
+        const itemDiv =
+            document.createElement("div");
 
-                        imageHTML = `
-
-                            <img
-                                src="${item.image}"
-                                alt="${item.name}"
-                            >
-
-                        `;
-
-                    }
+        itemDiv.className =
+            "cart-item";
 
 
-                    itemDiv.innerHTML = `
+        // ==============================
+        // IMAGE
+        // ==============================
 
-                        <div class="cart-item-image">
-                            ${imageHTML}
-                        </div>
+        const imageDiv =
+            document.createElement("div");
 
-                        <div class="cart-item-info">
-
-                            <h4>
-                                ${item.name}
-                            </h4>
-
-                            <div class="cart-item-price">
-                                ₹${item.price.toLocaleString("en-IN")}
-                            </div>
-
-                            <div class="quantity-controls">
-
-                                <button
-                                    onclick="changeQuantity(${item.id}, -1)">
-                                    −
-                                </button>
-
-                                <span>
-                                    ${item.quantity}
-                                </span>
-
-                                <button
-                                    onclick="changeQuantity(${item.id}, 1)">
-                                    +
-                                </button>
-
-                            </div>
-
-                            <button
-                                class="remove-item"
-                                onclick="removeFromCart(${item.id})">
-
-                                Remove
-
-                            </button>
-
-                        </div>
-
-                    `;
+        imageDiv.className =
+            "cart-item-image";
 
 
-                    cartItems.appendChild(
-                        itemDiv
-                    );
+        if (item.image) {
 
-                }
-            );
+            const img =
+                document.createElement("img");
 
+            img.src =
+                item.image;
 
-            cartTotal.textContent =
-                "₹" +
-                total.toLocaleString(
-                    "en-IN"
-                );
+            img.alt =
+                item.name;
+
+            imageDiv.appendChild(img);
+
+        } else {
+
+            imageDiv.textContent =
+                "🛍️";
 
         }
 
+
+        // ==============================
+        // INFORMATION
+        // ==============================
+
+        const infoDiv =
+            document.createElement("div");
+
+        infoDiv.className =
+            "cart-item-info";
+
+
+        const title =
+            document.createElement("h4");
+
+        title.textContent =
+            item.name;
+
+
+        const price =
+            document.createElement("div");
+
+        price.className =
+            "cart-item-price";
+
+        price.textContent =
+            "₹" +
+            item.price.toLocaleString("en-IN");
+
+
+        // ==============================
+        // QUANTITY CONTROLS
+        // ==============================
+
+        const quantityControls =
+            document.createElement("div");
+
+        quantityControls.className =
+            "quantity-controls";
+
+
+        const minusButton =
+            document.createElement("button");
+
+        minusButton.textContent =
+            "−";
+
+
+        const quantity =
+            document.createElement("span");
+
+        quantity.textContent =
+            item.quantity;
+
+
+        const plusButton =
+            document.createElement("button");
+
+        plusButton.textContent =
+            "+";
+
+
+        // ==============================
+        // MINUS BUTTON
+        // ==============================
+
+        minusButton.addEventListener(
+            "click",
+            function() {
+
+                changeQuantity(
+                    item.id,
+                    -1
+                );
+
+            }
+        );
+
+
+        // ==============================
+        // PLUS BUTTON
+        // ==============================
+
+        plusButton.addEventListener(
+            "click",
+            function() {
+
+                changeQuantity(
+                    item.id,
+                    1
+                );
+
+            }
+        );
+
+
+        quantityControls.appendChild(
+            minusButton
+        );
+
+        quantityControls.appendChild(
+            quantity
+        );
+
+        quantityControls.appendChild(
+            plusButton
+        );
+
+
+        // ==============================
+        // REMOVE BUTTON
+        // ==============================
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "remove-item";
+
+        removeButton.textContent =
+            "Remove";
+
+
+        removeButton.addEventListener(
+            "click",
+            function() {
+
+                removeFromCart(
+                    item.id
+                );
+
+            }
+        );
+
+
+        // ==============================
+        // APPEND
+        // ==============================
+
+        infoDiv.appendChild(title);
+
+        infoDiv.appendChild(price);
+
+        infoDiv.appendChild(
+            quantityControls
+        );
+
+        infoDiv.appendChild(
+            removeButton
+        );
+
+
+        itemDiv.appendChild(
+            imageDiv
+        );
+
+        itemDiv.appendChild(
+            infoDiv
+        );
+
+
+        cartItems.appendChild(
+            itemDiv
+        );
+
+    });
+
+
+    // ==============================
+    // TOTAL PRICE
+    // ==============================
+
+    cartTotal.textContent =
+        "₹" +
+        total.toLocaleString("en-IN");
+
+}
 
         // ==========================================
         // CHANGE QUANTITY
         // ==========================================
 
-        function changeQuantity(
-            productId,
-            amount
-        ) {
+        function changeQuantity(productId, amount) {
 
-            const item =
-                cart.find(
-                    function(item) {
+    const item =
+        cart.find(function(item) {
 
-                        return (
-                            String(item.id) ===
-                            String(productId)
-                        );
+            return String(item.id) ===
+                   String(productId);
 
-                    }
-                );
+        });
 
 
-            if (!item) return;
+    if (!item) {
+        return;
+    }
 
 
-            item.quantity +=
-                amount;
+    item.quantity += amount;
 
 
-            if (
-                item.quantity <= 0
-            ) {
+    if (item.quantity <= 0) {
 
-                cart =
-                    cart.filter(
-                        function(item) {
+        cart =
+            cart.filter(function(item) {
 
-                            return (
-                                String(item.id) !==
-                                String(productId)
-                            );
+                return String(item.id) !==
+                       String(productId);
 
-                        }
-                    );
+            });
 
-            }
+    }
 
 
-            saveCart();
+    saveCart();
 
-            updateCartUI();
+    updateCartUI();
 
-        }
-
+}
 
         // ==========================================
         // REMOVE FROM CART
         // ==========================================
 
-        function removeFromCart(
-            productId
-        ) {
+        function removeFromCart(productId) {
 
-            cart =
-                cart.filter(
-                    function(item) {
+    cart =
+        cart.filter(function(item) {
 
-                        return (
-                            String(item.id) !==
-                            String(productId)
-                        );
+            return String(item.id) !==
+                   String(productId);
 
-                    }
-                );
+        });
 
 
-            saveCart();
+    saveCart();
 
-            updateCartUI();
+    updateCartUI();
 
-        }
-
+}
 
         // ==========================================
         // OPEN CART
