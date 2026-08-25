@@ -7,11 +7,176 @@
     <title>EKart Mini - Online Shopping</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ==============================
+           CART
+        ============================== */
+
+        .cart-count {
+            background: #ff4d4d;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 12px;
+            margin-left: 4px;
+        }
+
+        .cart-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 999;
+        }
+
+        .cart-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 380px;
+            max-width: 95%;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+            transform: translateX(100%);
+            transition: 0.3s;
+        }
+
+        .cart-panel.open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .cart-header h2 {
+            margin: 0;
+        }
+
+        .close-cart {
+            border: none;
+            background: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 65px;
+            height: 65px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h4 {
+            margin: 0 0 5px;
+            font-size: 15px;
+        }
+
+        .cart-item-price {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantity-controls button {
+            width: 28px;
+            height: 28px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .remove-item {
+            color: #e53935;
+            border: none;
+            background: none;
+            cursor: pointer;
+            margin-top: 5px;
+            padding: 0;
+        }
+
+        .cart-total {
+            border-top: 2px solid #ddd;
+            margin-top: 20px;
+            padding-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #ff7a00;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 50px 10px;
+            color: #777;
+        }
+
+        @media (max-width: 500px) {
+            .cart-panel {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Header -->
+    <!-- ==============================
+         HEADER
+    ============================== -->
+
     <header class="header">
 
         <div class="logo">
@@ -24,28 +189,44 @@
                 id="searchInput"
                 placeholder="Search for products..."
             >
-            <button id="searchBtn">🔍</button>
+            <button>🔍</button>
         </div>
 
         <div class="header-actions">
-            <button>👤 Login</button>
-            <button>🛒 Cart</button>
+
+            <button>
+                👤 Login
+            </button>
+
+            <button id="cartButton">
+                🛒 Cart
+                <span id="cartCount" class="cart-count">0</span>
+            </button>
+
         </div>
 
     </header>
 
 
-    <!-- Navigation -->
+    <!-- ==============================
+         NAVIGATION
+    ============================== -->
+
     <nav class="navbar">
+
         <a href="#">Home</a>
         <a href="#">Categories</a>
         <a href="#">Today's Deals</a>
         <a href="#">New Arrivals</a>
         <a href="#">Help</a>
+
     </nav>
 
 
-    <!-- Hero Section -->
+    <!-- ==============================
+         HERO
+    ============================== -->
+
     <section class="hero">
 
         <div class="hero-content">
@@ -77,13 +258,24 @@
     </section>
 
 
-    <!-- Categories -->
+    <!-- ==============================
+         CATEGORIES
+    ============================== -->
+
     <section class="section">
 
         <div class="section-title">
-            <h2>Shop by Category</h2>
-            <a href="#">View All →</a>
+
+            <h2>
+                Shop by Category
+            </h2>
+
+            <a href="#">
+                View All →
+            </a>
+
         </div>
+
 
         <div class="categories">
 
@@ -128,30 +320,115 @@
     </section>
 
 
-    <!-- Products -->
+    <!-- ==============================
+         PRODUCTS
+    ============================== -->
+
     <section class="section">
 
         <div class="section-title">
-            <h2>Popular Products</h2>
-            <a href="#">View All →</a>
+
+            <h2>
+                Popular Products
+            </h2>
+
+            <a href="#">
+                View All →
+            </a>
+
         </div>
 
-        <!-- Loading message -->
+
         <div id="loadingMessage">
             Loading products...
         </div>
 
-        <!-- Products will appear here -->
-        <div class="products" id="productsContainer"></div>
 
-        <!-- Error message -->
-        <div id="errorMessage" style="display: none;">
+        <div
+            class="products"
+            id="productsContainer">
+        </div>
+
+
+        <div
+            id="errorMessage"
+            style="display:none;">
         </div>
 
     </section>
 
 
-    <!-- Footer -->
+    <!-- ==============================
+         CART OVERLAY
+    ============================== -->
+
+    <div
+        class="cart-overlay"
+        id="cartOverlay">
+    </div>
+
+
+    <!-- ==============================
+         CART PANEL
+    ============================== -->
+
+    <div
+        class="cart-panel"
+        id="cartPanel">
+
+        <div class="cart-header">
+
+            <h2>
+                🛒 Your Cart
+            </h2>
+
+            <button
+                class="close-cart"
+                id="closeCart">
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="cartItems">
+        </div>
+
+
+        <div
+            id="cartFooter"
+            style="display:none;">
+
+            <div class="cart-total">
+
+                <span>
+                    Total
+                </span>
+
+                <span id="cartTotal">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <button
+                class="checkout-btn"
+                onclick="goToCheckout()">
+
+                Proceed to Checkout →
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         FOOTER
+    ============================== -->
+
     <footer>
 
         <div class="footer-logo">
@@ -169,16 +446,18 @@
     </footer>
 
 
-    <!-- Supabase Library -->
+    <!-- ==============================
+         SUPABASE
+    ============================== -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-    <!-- Supabase + Products -->
     <script>
 
-        // ==============================
+        // ==========================================
         // SUPABASE CONNECTION
-        // ==============================
+        // ==========================================
 
         const SUPABASE_URL =
             "https://hwenndtrljkckxmmdsyf.supabase.co";
@@ -187,76 +466,115 @@
             "sb_publishable_FbLd2ncbSeeIE2KAjn2LFA_kQ7vV0Kx";
 
 
-        const supabaseClient = supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
+        const supabaseClient =
+            supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
 
-        // ==============================
+        // ==========================================
         // VARIABLES
-        // ==============================
+        // ==========================================
 
         const productsContainer =
-            document.getElementById("productsContainer");
+            document.getElementById(
+                "productsContainer"
+            );
 
         const loadingMessage =
-            document.getElementById("loadingMessage");
+            document.getElementById(
+                "loadingMessage"
+            );
 
         const errorMessage =
-            document.getElementById("errorMessage");
+            document.getElementById(
+                "errorMessage"
+            );
 
         const searchInput =
-            document.getElementById("searchInput");
+            document.getElementById(
+                "searchInput"
+            );
 
 
         let allProducts = [];
 
 
-        // ==============================
-        // LOAD PRODUCTS FROM SUPABASE
-        // ==============================
+        // ==========================================
+        // CART
+        // ==========================================
+
+        let cart =
+            JSON.parse(
+                localStorage.getItem(
+                    "ekartCart"
+                )
+            ) || [];
+
+
+        // ==========================================
+        // LOAD PRODUCTS
+        // ==========================================
 
         async function loadProducts() {
 
-            loadingMessage.style.display = "block";
-            errorMessage.style.display = "none";
+            loadingMessage.style.display =
+                "block";
 
-            productsContainer.innerHTML = "";
+            errorMessage.style.display =
+                "none";
 
-
-            const { data, error } = await supabaseClient
-                .from("products")
-                .select("*")
-                .order("id", { ascending: false });
+            productsContainer.innerHTML =
+                "";
 
 
-            loadingMessage.style.display = "none";
+            const { data, error } =
+                await supabaseClient
+                    .from("products")
+                    .select("*")
+                    .order(
+                        "id",
+                        {
+                            ascending: false
+                        }
+                    );
 
 
-            // If there is an error
+            loadingMessage.style.display =
+                "none";
+
+
             if (error) {
 
-                console.error("Supabase Error:", error);
+                console.error(
+                    "Supabase Error:",
+                    error
+                );
 
                 errorMessage.innerHTML =
                     "❌ Products load nahi ho pa rahe hain.";
 
-                errorMessage.style.display = "block";
+                errorMessage.style.display =
+                    "block";
 
                 return;
             }
 
 
-            // Save products
-            allProducts = data || [];
+            allProducts =
+                data || [];
 
 
-            console.log("Supabase Products:", allProducts);
+            console.log(
+                "Products from Supabase:",
+                allProducts
+            );
 
 
-            // No products
-            if (allProducts.length === 0) {
+            if (
+                allProducts.length === 0
+            ) {
 
                 productsContainer.innerHTML =
                     "<p>No products available.</p>";
@@ -265,127 +583,623 @@
             }
 
 
-            // Display products
-            displayProducts(allProducts);
+            displayProducts(
+                allProducts
+            );
+
         }
 
 
-        // ==============================
+        // ==========================================
         // DISPLAY PRODUCTS
-        // ==============================
+        // ==========================================
 
-        function displayProducts(products) {
+        function displayProducts(
+            products
+        ) {
 
-            productsContainer.innerHTML = "";
-
-
-            products.forEach(function(product) {
-
-                // Product name
-                const productName =
-                    product.name ||
-                    product.product_name ||
-                    "Product";
+            productsContainer.innerHTML =
+                "";
 
 
-                // Product category
-                const productCategory =
-                    product.category ||
-                    "General";
+            products.forEach(
+                function(product) {
+
+                    const productName =
+                        product.name ||
+                        product.product_name ||
+                        "Product";
 
 
-                // Product price
-                const productPrice =
-                    product.price || 0;
+                    const productCategory =
+                        product.category ||
+                        "General";
 
 
-                // Product image
-                const productImage =
-                    product.image ||
-                    product.image_url ||
-                    product.product_image ||
-                    "";
+                    const productPrice =
+                        Number(
+                            product.price
+                        ) || 0;
 
 
-                // Create card
-                const card =
-                    document.createElement("div");
-
-                card.className = "product-card";
-
-
-                // Image section
-                const imageDiv =
-                    document.createElement("div");
-
-                imageDiv.className =
-                    "product-image";
+                    const productImage =
+                        product.image ||
+                        product.image_url ||
+                        product.product_image ||
+                        "";
 
 
-                // If image exists
-                if (productImage) {
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
 
-                    const img =
-                        document.createElement("img");
+                    card.className =
+                        "product-card";
 
-                    img.src = productImage;
 
-                    img.alt = productName;
+                    const imageDiv =
+                        document.createElement(
+                            "div"
+                        );
 
-                    img.style.width = "100%";
-                    img.style.height = "100%";
-                    img.style.objectFit = "cover";
-                    img.style.borderRadius = "10px";
+                    imageDiv.className =
+                        "product-image";
 
-                    imageDiv.appendChild(img);
 
-                } else {
+                    if (productImage) {
 
-                    // Default emoji
-                    imageDiv.innerHTML = "🛍️";
+                        const img =
+                            document.createElement(
+                                "img"
+                            );
+
+                        img.src =
+                            productImage;
+
+                        img.alt =
+                            productName;
+
+                        img.style.width =
+                            "100%";
+
+                        img.style.height =
+                            "100%";
+
+                        img.style.objectFit =
+                            "cover";
+
+                        imageDiv.appendChild(
+                            img
+                        );
+
+                    } else {
+
+                        imageDiv.innerHTML =
+                            "🛍️";
+
+                    }
+
+
+                    const infoDiv =
+                        document.createElement(
+                            "div"
+                        );
+
+                    infoDiv.className =
+                        "product-info";
+
+
+                    infoDiv.innerHTML = `
+
+                        <p class="product-category">
+                            ${productCategory}
+                        </p>
+
+                        <h3>
+                            ${productName}
+                        </h3>
+
+                        <div class="price">
+                            ₹${productPrice.toLocaleString("en-IN")}
+                        </div>
+
+                        <button
+                            onclick="addToCart(${product.id})">
+
+                            Add to Cart
+
+                        </button>
+
+                    `;
+
+
+                    card.appendChild(
+                        imageDiv
+                    );
+
+                    card.appendChild(
+                        infoDiv
+                    );
+
+                    productsContainer.appendChild(
+                        card
+                    );
+
                 }
+            );
+
+        }
 
 
-                // Product info
-                const infoDiv =
-                    document.createElement("div");
+        // ==========================================
+        // ADD TO CART
+        // ==========================================
 
-                infoDiv.className =
-                    "product-info";
+        function addToCart(
+            productId
+        ) {
+
+            const product =
+                allProducts.find(
+                    function(p) {
+
+                        return (
+                            String(p.id) ===
+                            String(productId)
+                        );
+
+                    }
+                );
 
 
-                infoDiv.innerHTML = `
-                    <p class="product-category">
-                        ${productCategory}
-                    </p>
+            if (!product) {
 
-                    <h3>
-                        ${productName}
-                    </h3>
+                alert(
+                    "Product nahi mila."
+                );
 
-                    <div class="price">
-                        ₹${Number(productPrice).toLocaleString("en-IN")}
+                return;
+
+            }
+
+
+            const existingItem =
+                cart.find(
+                    function(item) {
+
+                        return (
+                            String(item.id) ===
+                            String(productId)
+                        );
+
+                    }
+                );
+
+
+            if (existingItem) {
+
+                existingItem.quantity++;
+
+            } else {
+
+                cart.push({
+
+                    id: product.id,
+
+                    name:
+                        product.name ||
+                        product.product_name ||
+                        "Product",
+
+                    price:
+                        Number(
+                            product.price
+                        ) || 0,
+
+                    image:
+                        product.image ||
+                        product.image_url ||
+                        product.product_image ||
+                        "",
+
+                    quantity: 1
+
+                });
+
+            }
+
+
+            saveCart();
+
+            updateCartUI();
+
+
+            alert(
+                "Product cart me add ho gaya! 🛒"
+            );
+
+        }
+
+
+        // ==========================================
+        // SAVE CART
+        // ==========================================
+
+        function saveCart() {
+
+            localStorage.setItem(
+                "ekartCart",
+                JSON.stringify(cart)
+            );
+
+        }
+
+
+        // ==========================================
+        // UPDATE CART
+        // ==========================================
+
+        function updateCartUI() {
+
+            const cartItems =
+                document.getElementById(
+                    "cartItems"
+                );
+
+            const cartCount =
+                document.getElementById(
+                    "cartCount"
+                );
+
+            const cartTotal =
+                document.getElementById(
+                    "cartTotal"
+                );
+
+            const cartFooter =
+                document.getElementById(
+                    "cartFooter"
+                );
+
+
+            // Total quantity
+            const totalQuantity =
+                cart.reduce(
+                    function(total, item) {
+
+                        return (
+                            total +
+                            item.quantity
+                        );
+
+                    },
+                    0
+                );
+
+
+            cartCount.textContent =
+                totalQuantity;
+
+
+            // Empty cart
+            if (
+                cart.length === 0
+            ) {
+
+                cartItems.innerHTML = `
+
+                    <div class="empty-cart">
+
+                        <div style="font-size:50px;">
+                            🛒
+                        </div>
+
+                        <h3>
+                            Your cart is empty
+                        </h3>
+
+                        <p>
+                            Add some products to your cart.
+                        </p>
+
                     </div>
 
-                    <button onclick="addToCart(${product.id})">
-                        Add to Cart
-                    </button>
                 `;
 
+                cartFooter.style.display =
+                    "none";
 
-                card.appendChild(imageDiv);
+                return;
 
-                card.appendChild(infoDiv);
+            }
 
-                productsContainer.appendChild(card);
 
-            });
+            cartFooter.style.display =
+                "block";
+
+
+            cartItems.innerHTML =
+                "";
+
+
+            let total =
+                0;
+
+
+            cart.forEach(
+                function(item) {
+
+                    total +=
+                        item.price *
+                        item.quantity;
+
+
+                    const itemDiv =
+                        document.createElement(
+                            "div"
+                        );
+
+                    itemDiv.className =
+                        "cart-item";
+
+
+                    let imageHTML =
+                        "🛍️";
+
+
+                    if (item.image) {
+
+                        imageHTML = `
+
+                            <img
+                                src="${item.image}"
+                                alt="${item.name}"
+                            >
+
+                        `;
+
+                    }
+
+
+                    itemDiv.innerHTML = `
+
+                        <div class="cart-item-image">
+                            ${imageHTML}
+                        </div>
+
+                        <div class="cart-item-info">
+
+                            <h4>
+                                ${item.name}
+                            </h4>
+
+                            <div class="cart-item-price">
+                                ₹${item.price.toLocaleString("en-IN")}
+                            </div>
+
+                            <div class="quantity-controls">
+
+                                <button
+                                    onclick="changeQuantity(${item.id}, -1)">
+                                    −
+                                </button>
+
+                                <span>
+                                    ${item.quantity}
+                                </span>
+
+                                <button
+                                    onclick="changeQuantity(${item.id}, 1)">
+                                    +
+                                </button>
+
+                            </div>
+
+                            <button
+                                class="remove-item"
+                                onclick="removeFromCart(${item.id})">
+
+                                Remove
+
+                            </button>
+
+                        </div>
+
+                    `;
+
+
+                    cartItems.appendChild(
+                        itemDiv
+                    );
+
+                }
+            );
+
+
+            cartTotal.textContent =
+                "₹" +
+                total.toLocaleString(
+                    "en-IN"
+                );
+
         }
 
 
-        // ==============================
-        // SEARCH PRODUCTS
-        // ==============================
+        // ==========================================
+        // CHANGE QUANTITY
+        // ==========================================
+
+        function changeQuantity(
+            productId,
+            amount
+        ) {
+
+            const item =
+                cart.find(
+                    function(item) {
+
+                        return (
+                            String(item.id) ===
+                            String(productId)
+                        );
+
+                    }
+                );
+
+
+            if (!item) return;
+
+
+            item.quantity +=
+                amount;
+
+
+            if (
+                item.quantity <= 0
+            ) {
+
+                cart =
+                    cart.filter(
+                        function(item) {
+
+                            return (
+                                String(item.id) !==
+                                String(productId)
+                            );
+
+                        }
+                    );
+
+            }
+
+
+            saveCart();
+
+            updateCartUI();
+
+        }
+
+
+        // ==========================================
+        // REMOVE FROM CART
+        // ==========================================
+
+        function removeFromCart(
+            productId
+        ) {
+
+            cart =
+                cart.filter(
+                    function(item) {
+
+                        return (
+                            String(item.id) !==
+                            String(productId)
+                        );
+
+                    }
+                );
+
+
+            saveCart();
+
+            updateCartUI();
+
+        }
+
+
+        // ==========================================
+        // OPEN CART
+        // ==========================================
+
+        function openCart() {
+
+            const cartPanel =
+                document.getElementById(
+                    "cartPanel"
+                );
+
+            const cartOverlay =
+                document.getElementById(
+                    "cartOverlay"
+                );
+
+
+            cartPanel.classList.add(
+                "open"
+            );
+
+            cartOverlay.style.display =
+                "block";
+
+        }
+
+
+        // ==========================================
+        // CLOSE CART
+        // ==========================================
+
+        function closeCart() {
+
+            const cartPanel =
+                document.getElementById(
+                    "cartPanel"
+                );
+
+            const cartOverlay =
+                document.getElementById(
+                    "cartOverlay"
+                );
+
+
+            cartPanel.classList.remove(
+                "open"
+            );
+
+            cartOverlay.style.display =
+                "none";
+
+        }
+
+
+        // ==========================================
+        // CART BUTTON
+        // ==========================================
+
+        document
+            .getElementById(
+                "cartButton"
+            )
+            .addEventListener(
+                "click",
+                openCart
+            );
+
+
+        document
+            .getElementById(
+                "closeCart"
+            )
+            .addEventListener(
+                "click",
+                closeCart
+            );
+
+
+        document
+            .getElementById(
+                "cartOverlay"
+            )
+            .addEventListener(
+                "click",
+                closeCart
+            );
+
+
+        // ==========================================
+        // SEARCH
+        // ==========================================
 
         searchInput.addEventListener(
             "input",
@@ -397,79 +1211,92 @@
                         .trim();
 
 
-                if (searchText === "") {
+                if (
+                    searchText === ""
+                ) {
 
-                    displayProducts(allProducts);
+                    displayProducts(
+                        allProducts
+                    );
 
                     return;
+
                 }
 
 
                 const filteredProducts =
-                    allProducts.filter(function(product) {
+                    allProducts.filter(
+                        function(product) {
 
-                        const name =
-                            (
-                                product.name ||
-                                product.product_name ||
-                                ""
-                            ).toLowerCase();
-
-
-                        const category =
-                            (
-                                product.category ||
-                                ""
-                            ).toLowerCase();
+                            const name =
+                                (
+                                    product.name ||
+                                    product.product_name ||
+                                    ""
+                                ).toLowerCase();
 
 
-                        return (
-                            name.includes(searchText) ||
-                            category.includes(searchText)
-                        );
+                            const category =
+                                (
+                                    product.category ||
+                                    ""
+                                ).toLowerCase();
 
-                    });
+
+                            return (
+                                name.includes(
+                                    searchText
+                                ) ||
+                                category.includes(
+                                    searchText
+                                )
+                            );
+
+                        }
+                    );
 
 
-                displayProducts(filteredProducts);
+                displayProducts(
+                    filteredProducts
+                );
 
             }
         );
 
 
-        // ==============================
-        // ADD TO CART
-        // ==============================
+        // ==========================================
+        // CHECKOUT
+        // ==========================================
 
-        function addToCart(productId) {
+        function goToCheckout() {
 
-            const product =
-                allProducts.find(
-                    p => p.id === productId
+            if (
+                cart.length === 0
+            ) {
+
+                alert(
+                    "Cart empty hai."
                 );
 
-
-            if (!product) {
-
-                alert("Product nahi mila.");
-
                 return;
+
             }
 
 
             alert(
-                product.name +
-                " cart me add ho gaya! 🛒"
+                "Checkout system next step me banayenge! 🛍️"
             );
 
         }
 
 
-        // ==============================
+        // ==========================================
         // START
-        // ==============================
+        // ==========================================
 
         loadProducts();
+
+        updateCartUI();
 
     </script>
 
