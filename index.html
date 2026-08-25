@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>EKart Mini - Online Shopping</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -17,8 +19,12 @@
         </div>
 
         <div class="search-box">
-            <input type="text" placeholder="Search for products...">
-            <button>🔍</button>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search for products..."
+            >
+            <button id="searchBtn">🔍</button>
         </div>
 
         <div class="header-actions">
@@ -43,9 +49,13 @@
     <section class="hero">
 
         <div class="hero-content">
-            <p class="small-text">WELCOME TO EKART MINI</p>
 
-            <h1>Everything You Need,<br>
+            <p class="small-text">
+                WELCOME TO EKART MINI
+            </p>
+
+            <h1>
+                Everything You Need,<br>
                 <span>At One Place.</span>
             </h1>
 
@@ -54,7 +64,10 @@
                 Shop easily and get them delivered to your doorstep.
             </p>
 
-            <button class="shop-btn">Shop Now →</button>
+            <button class="shop-btn">
+                Shop Now →
+            </button>
+
         </div>
 
         <div class="hero-image">
@@ -123,48 +136,16 @@
             <a href="#">View All →</a>
         </div>
 
-        <div class="products">
+        <!-- Loading message -->
+        <div id="loadingMessage">
+            Loading products...
+        </div>
 
-            <div class="product-card">
-                <div class="product-image">👕</div>
-                <div class="product-info">
-                    <p class="product-category">Fashion</p>
-                    <h3>Stylish Casual T-Shirt</h3>
-                    <div class="price">₹499</div>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
+        <!-- Products will appear here -->
+        <div class="products" id="productsContainer"></div>
 
-            <div class="product-card">
-                <div class="product-image">🎧</div>
-                <div class="product-info">
-                    <p class="product-category">Electronics</p>
-                    <h3>Wireless Headphones</h3>
-                    <div class="price">₹899</div>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">🎒</div>
-                <div class="product-info">
-                    <p class="product-category">Accessories</p>
-                    <h3>Premium Travel Backpack</h3>
-                    <div class="price">₹699</div>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">⌚</div>
-                <div class="product-info">
-                    <p class="product-category">Electronics</p>
-                    <h3>Smart Watch</h3>
-                    <div class="price">₹1,299</div>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-
+        <!-- Error message -->
+        <div id="errorMessage" style="display: none;">
         </div>
 
     </section>
@@ -186,32 +167,311 @@
         </p>
 
     </footer>
+
+
+    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-  const SUPABASE_URL = "https://hwenndtrljkckxmmdsyf.supabase.co/rest/v1/";
-  const SUPABASE_KEY = "sb_publishable_FbLd2ncbSeeIE2KAjn2LFA_kQ7vV0Kx";
 
-  const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+    <!-- Supabase + Products -->
+    <script>
 
-  async function testSupabase() {
-    const { data, error } = await supabaseClient
-      .from("products")
-      .select("*");
+        // ==============================
+        // SUPABASE CONNECTION
+        // ==============================
 
-    if (error) {
-      console.error("Supabase Error:", error);
-      return;
-    }
+        const SUPABASE_URL =
+            "https://hwenndtrljkckxmmdsyf.supabase.co";
 
-    console.log("Products:", data);
-  }
+        const SUPABASE_KEY =
+            "sb_publishable_FbLd2ncbSeeIE2KAjn2LFA_kQ7vV0Kx";
 
-  testSupabase();
-</script>
+
+        const supabaseClient = supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+        // ==============================
+        // VARIABLES
+        // ==============================
+
+        const productsContainer =
+            document.getElementById("productsContainer");
+
+        const loadingMessage =
+            document.getElementById("loadingMessage");
+
+        const errorMessage =
+            document.getElementById("errorMessage");
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+
+        let allProducts = [];
+
+
+        // ==============================
+        // LOAD PRODUCTS FROM SUPABASE
+        // ==============================
+
+        async function loadProducts() {
+
+            loadingMessage.style.display = "block";
+            errorMessage.style.display = "none";
+
+            productsContainer.innerHTML = "";
+
+
+            const { data, error } = await supabaseClient
+                .from("products")
+                .select("*")
+                .order("id", { ascending: false });
+
+
+            loadingMessage.style.display = "none";
+
+
+            // If there is an error
+            if (error) {
+
+                console.error("Supabase Error:", error);
+
+                errorMessage.innerHTML =
+                    "❌ Products load nahi ho pa rahe hain.";
+
+                errorMessage.style.display = "block";
+
+                return;
+            }
+
+
+            // Save products
+            allProducts = data || [];
+
+
+            console.log("Supabase Products:", allProducts);
+
+
+            // No products
+            if (allProducts.length === 0) {
+
+                productsContainer.innerHTML =
+                    "<p>No products available.</p>";
+
+                return;
+            }
+
+
+            // Display products
+            displayProducts(allProducts);
+        }
+
+
+        // ==============================
+        // DISPLAY PRODUCTS
+        // ==============================
+
+        function displayProducts(products) {
+
+            productsContainer.innerHTML = "";
+
+
+            products.forEach(function(product) {
+
+                // Product name
+                const productName =
+                    product.name ||
+                    product.product_name ||
+                    "Product";
+
+
+                // Product category
+                const productCategory =
+                    product.category ||
+                    "General";
+
+
+                // Product price
+                const productPrice =
+                    product.price || 0;
+
+
+                // Product image
+                const productImage =
+                    product.image ||
+                    product.image_url ||
+                    product.product_image ||
+                    "";
+
+
+                // Create card
+                const card =
+                    document.createElement("div");
+
+                card.className = "product-card";
+
+
+                // Image section
+                const imageDiv =
+                    document.createElement("div");
+
+                imageDiv.className =
+                    "product-image";
+
+
+                // If image exists
+                if (productImage) {
+
+                    const img =
+                        document.createElement("img");
+
+                    img.src = productImage;
+
+                    img.alt = productName;
+
+                    img.style.width = "100%";
+                    img.style.height = "100%";
+                    img.style.objectFit = "cover";
+                    img.style.borderRadius = "10px";
+
+                    imageDiv.appendChild(img);
+
+                } else {
+
+                    // Default emoji
+                    imageDiv.innerHTML = "🛍️";
+                }
+
+
+                // Product info
+                const infoDiv =
+                    document.createElement("div");
+
+                infoDiv.className =
+                    "product-info";
+
+
+                infoDiv.innerHTML = `
+                    <p class="product-category">
+                        ${productCategory}
+                    </p>
+
+                    <h3>
+                        ${productName}
+                    </h3>
+
+                    <div class="price">
+                        ₹${Number(productPrice).toLocaleString("en-IN")}
+                    </div>
+
+                    <button onclick="addToCart(${product.id})">
+                        Add to Cart
+                    </button>
+                `;
+
+
+                card.appendChild(imageDiv);
+
+                card.appendChild(infoDiv);
+
+                productsContainer.appendChild(card);
+
+            });
+        }
+
+
+        // ==============================
+        // SEARCH PRODUCTS
+        // ==============================
+
+        searchInput.addEventListener(
+            "input",
+            function() {
+
+                const searchText =
+                    searchInput.value
+                        .toLowerCase()
+                        .trim();
+
+
+                if (searchText === "") {
+
+                    displayProducts(allProducts);
+
+                    return;
+                }
+
+
+                const filteredProducts =
+                    allProducts.filter(function(product) {
+
+                        const name =
+                            (
+                                product.name ||
+                                product.product_name ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const category =
+                            (
+                                product.category ||
+                                ""
+                            ).toLowerCase();
+
+
+                        return (
+                            name.includes(searchText) ||
+                            category.includes(searchText)
+                        );
+
+                    });
+
+
+                displayProducts(filteredProducts);
+
+            }
+        );
+
+
+        // ==============================
+        // ADD TO CART
+        // ==============================
+
+        function addToCart(productId) {
+
+            const product =
+                allProducts.find(
+                    p => p.id === productId
+                );
+
+
+            if (!product) {
+
+                alert("Product nahi mila.");
+
+                return;
+            }
+
+
+            alert(
+                product.name +
+                " cart me add ho gaya! 🛒"
+            );
+
+        }
+
+
+        // ==============================
+        // START
+        // ==============================
+
+        loadProducts();
+
+    </script>
 
 </body>
 </html>
