@@ -411,3 +411,316 @@ footer p {
         grid-template-columns: 1fr;
     }
 }
+/* ==========================================
+   EKART MINI CART
+========================================== */
+
+.cart-count {
+    background: #6d28d9;
+    color: white;
+    border-radius: 50%;
+    min-width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+
+/* Cart overlay */
+
+.cart-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 999;
+}
+
+
+/* Cart panel */
+
+.cart-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    width: 400px;
+    max-width: 95%;
+
+    height: 100vh;
+
+    background: white;
+
+    z-index: 1000;
+
+    padding: 22px;
+
+    overflow-y: auto;
+
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
+
+    transform: translateX(100%);
+
+    transition: transform 0.3s ease;
+}
+
+.cart-panel.open {
+    transform: translateX(0);
+}
+
+
+/* Cart header */
+
+.cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #eee;
+
+    margin-bottom: 10px;
+}
+
+.cart-header h2 {
+    font-size: 22px;
+}
+
+.close-cart {
+    border: none;
+    background: #f3f4f6;
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+.close-cart:hover {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+
+/* Cart item */
+
+.cart-item {
+    display: flex;
+    gap: 12px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-image {
+    width: 70px;
+    height: 70px;
+
+    flex-shrink: 0;
+
+    background: #f3f4f6;
+
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    font-size: 30px;
+}
+
+.cart-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Cart item information */
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-info h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.cart-item-price {
+    font-size: 15px;
+    font-weight: bold;
+    color: #111827;
+
+    margin-bottom: 8px;
+}
+
+
+/* Quantity */
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.quantity-controls button {
+    width: 27px;
+    height: 27px;
+
+    border: 1px solid #ddd;
+
+    background: white;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.quantity-controls button:hover {
+    border-color: #6d28d9;
+    color: #6d28d9;
+}
+
+
+/* Remove */
+
+.remove-item {
+    margin-top: 7px;
+
+    border: none;
+
+    background: none;
+
+    color: #dc2626;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    padding: 0;
+}
+
+.remove-item:hover {
+    text-decoration: underline;
+}
+
+
+/* Cart total */
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+
+    border-top: 2px solid #eee;
+
+    margin-top: 20px;
+    padding-top: 18px;
+
+    font-size: 19px;
+    font-weight: bold;
+}
+
+
+/* Checkout */
+
+.checkout-btn {
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #6d28d9;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.checkout-btn:hover {
+    background: #4c1d95;
+}
+
+
+/* Empty cart */
+
+.empty-cart {
+    text-align: center;
+
+    padding: 60px 15px;
+
+    color: #777;
+}
+
+.empty-cart div {
+    margin-bottom: 15px;
+}
+
+
+/* Loading */
+
+#loadingMessage {
+    text-align: center;
+
+    padding: 30px;
+
+    color: #777;
+}
+
+
+/* Error */
+
+#errorMessage {
+    text-align: center;
+
+    padding: 20px;
+
+    color: #dc2626;
+}
+
+
+/* Product images */
+
+.product-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* Mobile cart */
+
+@media (max-width: 550px) {
+
+    .cart-panel {
+        width: 100%;
+        max-width: 100%;
+    }
+
+}
