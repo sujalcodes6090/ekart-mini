@@ -251,10 +251,9 @@ body {
 
 .products {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
 }
-
 .product-card {
     background: white;
     border-radius: 12px;
@@ -269,7 +268,7 @@ body {
 }
 
 .product-image {
-    height: 210px;
+    height: 175px;
     background: #f3f4f6;
     display: flex;
     align-items: center;
@@ -278,7 +277,7 @@ body {
 }
 
 .product-info {
-    padding: 18px;
+    padding: 13px;
 }
 
 .product-category {
