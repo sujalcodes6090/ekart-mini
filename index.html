@@ -690,7 +690,7 @@
                         "product-info";
 
 
-                   infoDiv.innerHTML = `
+                  infoDiv.innerHTML = `
 
     <p class="product-category">
         ${productCategory}
@@ -704,9 +704,17 @@
         ₹${productPrice.toLocaleString("en-IN")}
     </div>
 
-    <button class="add-cart-btn">
-        Add to Cart
-    </button>
+    <div class="product-buttons">
+
+        <button class="add-cart-btn">
+            Add to Cart
+        </button>
+
+        <button class="buy-now-btn">
+            Buy Now
+        </button>
+
+    </div>
 
 `;
 
@@ -716,6 +724,15 @@ const addButton =
 addButton.addEventListener("click", function () {
 
     addToCart(product.id);
+
+});
+                    
+                    const buyNowButton =
+    infoDiv.querySelector(".buy-now-btn");
+
+buyNowButton.addEventListener("click", function () {
+
+    buyNow(product.id);
 
 });
 
@@ -826,6 +843,64 @@ addButton.addEventListener("click", function () {
             );
 
         }
+        
+// ==========================================
+// BUY NOW
+// ==========================================
+
+function buyNow(productId) {
+
+    const product =
+        allProducts.find(function(p) {
+
+            return String(p.id) ===
+                   String(productId);
+
+        });
+
+
+    if (!product) {
+
+        alert("Product nahi mila.");
+
+        return;
+
+    }
+
+
+    const buyNowProduct = {
+
+        id: product.id,
+
+        name:
+            product.name ||
+            product.product_name ||
+            "Product",
+
+        price:
+            Number(product.price) || 0,
+
+        image:
+            product.image ||
+            product.image_url ||
+            product.product_image ||
+            "",
+
+        quantity: 1
+
+    };
+
+
+    localStorage.setItem(
+        "ekartBuyNow",
+        JSON.stringify(buyNowProduct)
+    );
+
+
+    window.location.href =
+        "checkout.html";
+
+}
 
 
         // ==========================================
