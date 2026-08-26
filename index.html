@@ -12,6 +12,41 @@
 <link rel="icon" href="data:,">
 
 <style>
+    /* FINAL IMAGE OVERRIDE */
+
+.product-image {
+    height: 220px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block !important;
+}
+
+@media screen and (max-width: 700px) {
+
+    .product-image {
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        width: 100% !important;
+    }
+
+    .product-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+    }
+
+}
 
 *{
     margin:0;
