@@ -84,7 +84,8 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             border: 1px solid #ddd;
             border-radius: 7px;
@@ -92,6 +93,13 @@
             font-size: 14px;
             outline: none;
             font-family: inherit;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #6d28d9;
         }
 
         .form-group textarea {
@@ -338,92 +346,217 @@
         </div>
 
 
+        <!-- STATE -->
+
+        <div class="form-group">
+
+            <label>
+                State *
+            </label>
+
+            <select
+                id="state"
+                required
+            >
+
+                <option value="">
+                    Select State
+                </option>
+
+                <optgroup label="States">
+
+                    <option value="Andhra Pradesh">
+                        Andhra Pradesh
+                    </option>
+
+                    <option value="Arunachal Pradesh">
+                        Arunachal Pradesh
+                    </option>
+
+                    <option value="Assam">
+                        Assam
+                    </option>
+
+                    <option value="Bihar">
+                        Bihar
+                    </option>
+
+                    <option value="Chhattisgarh">
+                        Chhattisgarh
+                    </option>
+
+                    <option value="Goa">
+                        Goa
+                    </option>
+
+                    <option value="Gujarat">
+                        Gujarat
+                    </option>
+
+                    <option value="Haryana">
+                        Haryana
+                    </option>
+
+                    <option value="Himachal Pradesh">
+                        Himachal Pradesh
+                    </option>
+
+                    <option value="Jharkhand">
+                        Jharkhand
+                    </option>
+
+                    <option value="Karnataka">
+                        Karnataka
+                    </option>
+
+                    <option value="Kerala">
+                        Kerala
+                    </option>
+
+                    <option value="Madhya Pradesh">
+                        Madhya Pradesh
+                    </option>
+
+                    <option value="Maharashtra">
+                        Maharashtra
+                    </option>
+
+                    <option value="Manipur">
+                        Manipur
+                    </option>
+
+                    <option value="Meghalaya">
+                        Meghalaya
+                    </option>
+
+                    <option value="Mizoram">
+                        Mizoram
+                    </option>
+
+                    <option value="Nagaland">
+                        Nagaland
+                    </option>
+
+                    <option value="Odisha">
+                        Odisha
+                    </option>
+
+                    <option value="Punjab">
+                        Punjab
+                    </option>
+
+                    <option value="Rajasthan">
+                        Rajasthan
+                    </option>
+
+                    <option value="Sikkim">
+                        Sikkim
+                    </option>
+
+                    <option value="Tamil Nadu">
+                        Tamil Nadu
+                    </option>
+
+                    <option value="Telangana">
+                        Telangana
+                    </option>
+
+                    <option value="Tripura">
+                        Tripura
+                    </option>
+
+                    <option value="Uttar Pradesh">
+                        Uttar Pradesh
+                    </option>
+
+                    <option value="Uttarakhand">
+                        Uttarakhand
+                    </option>
+
+                    <option value="West Bengal">
+                        West Bengal
+                    </option>
+
+                </optgroup>
+
+
+                <optgroup label="Union Territories">
+
+                    <option value="Andaman and Nicobar Islands">
+                        Andaman and Nicobar Islands
+                    </option>
+
+                    <option value="Chandigarh">
+                        Chandigarh
+                    </option>
+
+                    <option value="Dadra and Nagar Haveli and Daman and Diu">
+                        Dadra and Nagar Haveli and Daman and Diu
+                    </option>
+
+                    <option value="Delhi">
+                        Delhi
+                    </option>
+
+                    <option value="Jammu and Kashmir">
+                        Jammu and Kashmir
+                    </option>
+
+                    <option value="Ladakh">
+                        Ladakh
+                    </option>
+
+                    <option value="Lakshadweep">
+                        Lakshadweep
+                    </option>
+
+                    <option value="Puducherry">
+                        Puducherry
+                    </option>
+
+                </optgroup>
+
+            </select>
+
+        </div>
+
+
+        <!-- CITY + PIN -->
+
         <div class="two-columns">
 
-    <div class="form-group">
 
-        <label>
-            State *
-        </label>
+            <div class="form-group">
 
-        <select id="state" required>
-            <option value="">Select State</option>
+                <label>
+                    City *
+                </label>
 
-            <option value="Andhra Pradesh">Andhra Pradesh</option>
-            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-            <option value="Assam">Assam</option>
-            <option value="Bihar">Bihar</option>
-            <option value="Chhattisgarh">Chhattisgarh</option>
-            <option value="Goa">Goa</option>
-            <option value="Gujarat">Gujarat</option>
-            <option value="Haryana">Haryana</option>
-            <option value="Himachal Pradesh">Himachal Pradesh</option>
-            <option value="Jharkhand">Jharkhand</option>
-            <option value="Karnataka">Karnataka</option>
-            <option value="Kerala">Kerala</option>
-            <option value="Madhya Pradesh">Madhya Pradesh</option>
-            <option value="Maharashtra">Maharashtra</option>
-            <option value="Manipur">Manipur</option>
-            <option value="Meghalaya">Meghalaya</option>
-            <option value="Mizoram">Mizoram</option>
-            <option value="Nagaland">Nagaland</option>
-            <option value="Odisha">Odisha</option>
-            <option value="Punjab">Punjab</option>
-            <option value="Rajasthan">Rajasthan</option>
-            <option value="Sikkim">Sikkim</option>
-            <option value="Tamil Nadu">Tamil Nadu</option>
-            <option value="Telangana">Telangana</option>
-            <option value="Tripura">Tripura</option>
-            <option value="Uttar Pradesh">Uttar Pradesh</option>
-            <option value="Uttarakhand">Uttarakhand</option>
-            <option value="West Bengal">West Bengal</option>
+                <input
+                    type="text"
+                    id="city"
+                    placeholder="City"
+                    required
+                >
 
-            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-            <option value="Chandigarh">Chandigarh</option>
-            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-            <option value="Delhi">Delhi</option>
-            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-            <option value="Ladakh">Ladakh</option>
-            <option value="Lakshadweep">Lakshadweep</option>
-            <option value="Puducherry">Puducherry</option>
-        </select>
-
-    </div>
+            </div>
 
 
-    <div class="form-group">
+            <div class="form-group">
 
-        <label>
-            City *
-        </label>
+                <label>
+                    PIN Code *
+                </label>
 
-        <input
-            type="text"
-            id="city"
-            placeholder="City"
-            required
-        >
+                <input
+                    type="text"
+                    id="pincode"
+                    placeholder="6-digit PIN"
+                    maxlength="6"
+                    required
+                >
 
-    </div>
-
-</div>
-
-
-<div class="form-group">
-
-    <label>
-        PIN Code *
-    </label>
-
-    <input
-        type="text"
-        id="pincode"
-        placeholder="6-digit PIN"
-        maxlength="6"
-        required
-    >
-
-</div>
+            </div>
 
 
         </div>
@@ -572,6 +705,7 @@
 
 const SUPABASE_URL =
     "https://hwenndtrljkckxmmdsyf.supabase.co";
+
 
 const SUPABASE_KEY =
     "sb_publishable_FbLd2ncbSeeIE2KAjn2LFA_kQ7vV0Kx";
@@ -728,6 +862,7 @@ function loadCheckout() {
             name.className =
                 "order-item-name";
 
+
             name.textContent =
                 item.name;
 
@@ -740,6 +875,7 @@ function loadCheckout() {
 
             quantity.className =
                 "order-item-quantity";
+
 
             quantity.textContent =
                 "Quantity: " +
@@ -758,6 +894,7 @@ function loadCheckout() {
 
             price.className =
                 "order-item-price";
+
 
             price.textContent =
                 "₹" +
@@ -783,6 +920,7 @@ function loadCheckout() {
         total.toLocaleString(
             "en-IN"
         );
+
 }
 
 
@@ -821,11 +959,12 @@ checkoutForm.addEventListener(
             document.getElementById(
                 "address"
             ).value.trim();
-        
+
+
         const state =
-    document.getElementById(
-        "state"
-    ).value;
+            document.getElementById(
+                "state"
+            ).value;
 
 
         const city =
@@ -838,6 +977,18 @@ checkoutForm.addEventListener(
             document.getElementById(
                 "pincode"
             ).value.trim();
+
+
+        if (
+            !state
+        ) {
+
+            alert(
+                "Please select your state."
+            );
+
+            return;
+        }
 
 
         if (
@@ -888,6 +1039,7 @@ checkoutForm.addEventListener(
         placeOrderBtn.disabled =
             true;
 
+
         placeOrderBtn.textContent =
             "Placing Order...";
 
@@ -910,6 +1062,9 @@ checkoutForm.addEventListener(
 
                         address:
                             address,
+
+                        state:
+                            state,
 
                         city:
                             city,
@@ -953,8 +1108,10 @@ checkoutForm.addEventListener(
             placeOrderBtn.disabled =
                 false;
 
+
             placeOrderBtn.textContent =
                 "Place Order";
+
 
             return;
         }
@@ -964,9 +1121,11 @@ checkoutForm.addEventListener(
             "ekartCart"
         );
 
+
         localStorage.removeItem(
             "ekartBuyNow"
         );
+
 
         localStorage.removeItem(
             "ekartCheckoutMode"
@@ -997,6 +1156,7 @@ function goBack() {
 
     window.location.href =
         "index.html";
+
 }
 
 
@@ -1004,10 +1164,12 @@ function goHome() {
 
     window.location.href =
         "index.html";
+
 }
 
 
 loadCheckout();
+
 
 </script>
 
