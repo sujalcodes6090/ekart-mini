@@ -981,16 +981,45 @@ td {
 
 
             <div class="form-group">
+                <label>Main Image URL</label>
+                <input type="url" id="productImage" placeholder="https://example.com/image1.jpg">
+            </div>
 
-                <label>
-                    Image URL
-                </label>
+            <div class="form-group">
+                <label>Image 2 URL</label>
+                <input type="url" id="productImage2" placeholder="https://example.com/image2.jpg">
+            </div>
 
-                <input
-                    type="url"
-                    id="productImage"
-                    placeholder="https://example.com/image.jpg">
+            <div class="form-group">
+                <label>Image 3 URL</label>
+                <input type="url" id="productImage3" placeholder="https://example.com/image3.jpg">
+            </div>
 
+            <div class="form-group">
+                <label>Image 4 URL</label>
+                <input type="url" id="productImage4" placeholder="https://example.com/image4.jpg">
+            </div>
+
+            <div class="form-group">
+                <label>Image 5 URL</label>
+                <input type="url" id="productImage5" placeholder="https://example.com/image5.jpg">
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="productDescription" placeholder="Enter product description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Colors</label>
+                <input type="text" id="productColors" placeholder="Black, Blue, Red">
+                <small style="color:#777;display:block;margin-top:6px;">Comma se alag karo. Blank chhoda to Color option nahi dikhega.</small>
+            </div>
+
+            <div class="form-group">
+                <label>Sizes</label>
+                <input type="text" id="productSizes" placeholder="S, M, L, XL or Free Size">
+                <small style="color:#777;display:block;margin-top:6px;">Example: S, M, L, XL ya sirf Free Size. Blank chhoda to Size option nahi dikhega.</small>
             </div>
 
 
@@ -2404,6 +2433,14 @@ function openEditProduct(productId) {
     ).value =
         product.image || "";
 
+    document.getElementById("productImage2").value = product.image2 || "";
+    document.getElementById("productImage3").value = product.image3 || "";
+    document.getElementById("productImage4").value = product.image4 || "";
+    document.getElementById("productImage5").value = product.image5 || "";
+    document.getElementById("productDescription").value = product.description || "";
+    document.getElementById("productColors").value = product.colors || "";
+    document.getElementById("productSizes").value = product.sizes || "";
+
 
     document.getElementById(
         "productModal"
@@ -2470,6 +2507,14 @@ document.getElementById(
             document.getElementById(
                 "productImage"
             ).value.trim();
+
+        const image2 = document.getElementById("productImage2").value.trim();
+        const image3 = document.getElementById("productImage3").value.trim();
+        const image4 = document.getElementById("productImage4").value.trim();
+        const image5 = document.getElementById("productImage5").value.trim();
+        const description = document.getElementById("productDescription").value.trim();
+        const colors = document.getElementById("productColors").value.trim();
+        const sizes = document.getElementById("productSizes").value.trim();
 
 
         if (!name) {
@@ -2543,6 +2588,27 @@ document.getElementById(
 
             image:
                 image,
+
+            image2:
+                image2,
+
+            image3:
+                image3,
+
+            image4:
+                image4,
+
+            image5:
+                image5,
+
+            description:
+                description,
+
+            colors:
+                colors,
+
+            sizes:
+                sizes,
 
             stock:
                 stock
