@@ -1317,7 +1317,7 @@ async function loadProducts() {
             await supabaseClient
                 .from("products")
                 .select(
-                    "id,name,category,price,image,stock,description"
+                    "id,name,category,price,image,stock,description,product_code"
                 )
                 .order(
                     "id",
@@ -1946,6 +1946,10 @@ function buyNow(
         name:
             product.name ||
             "Product",
+
+        product_code:
+            product.product_code ||
+            "",
 
         price:
             Number(
