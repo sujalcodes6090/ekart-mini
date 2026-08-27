@@ -283,6 +283,7 @@ body {
 }
 
 .product-card {
+    cursor: pointer;
     background: white;
     border: 1px solid #eee;
     border-radius: 12px;
@@ -1483,6 +1484,29 @@ function displayProducts(
 
             card.className =
                 "product-card";
+
+            /* OPEN PRODUCT DETAIL PAGE */
+            card.addEventListener(
+                "click",
+                function(event) {
+                    /*
+                       Buttons inside the card already have their
+                       own click handlers. Do not open the detail
+                       page when those buttons are clicked.
+                    */
+                    if (
+                        event.target.closest("button")
+                    ) {
+                        return;
+                    }
+
+                    window.location.href =
+                        "product.html?id=" +
+                        encodeURIComponent(
+                            product.id
+                        );
+                }
+            );
 
 
             /* IMAGE */
